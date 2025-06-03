@@ -1,0 +1,9 @@
+### separate label and description with ":"
+### Things added in later versions, add at the bottom
+### Use category "pages" or "files" or "general"
+
+# cat=pages; type=string; label=Page types (doktype) which should be viewable in FE (csv string)
+visiblePageTypes = 1
+
+# cat=pages; type=string; label=Do not show these pages (csv string)
+ignorePageDbMounts =

@@ -1,0 +1,27 @@
+<html
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+        data-namespace-typo3-fluid="true">
+
+<f:comment>
+
+    <f:be.pageRenderer
+            includeCssFiles="{0:'{f:uri.resource(path:\'Backend/Css/style.css\', extensionName: \'uniolbeuser\')}'}"
+            includeJsFiles="{0: '{f:uri.resource(path:\'Backend/JavaScript/uniolbeuser.js\', extensionName: \'uniolbeuser\')}'}"
+    />
+</f:comment>
+<f:comment>
+    include modules: see https://www.npostnik.de/typo3/backend-module-mit-javascript-und-styles/
+</f:comment>
+<f:be.pageRenderer
+    includeCssFiles="{0:'{f:uri.resource(path:\'Backend/Css/style.css\', extensionName: \'uniolbeuser\')}'}"
+    includeJavaScriptModules="{
+        0: '@uniolweb/uniolbeuser/Uniolbeuser.js'
+    }"
+/>
+    <div class="uniolbeuser">
+        <f:render section="Header" optional="1"/>
+        <f:render section="ResultsHeader" optional="1"/>
+        <f:render section="Content" />
+    </div>
+</html>

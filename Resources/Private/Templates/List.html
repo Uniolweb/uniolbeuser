@@ -1,0 +1,25 @@
+<html
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+	data-namespace-typo3-fluid="true">
+
+<f:spaceless>
+	<f:layout name="BackendModuleLayout"/>
+
+	<f:section name="Header">
+		<h2>Übersicht über Redakteure</h2>
+	</f:section>
+
+	<f:section name="Content">
+		<f:flashMessages/>
+
+		<span id="alleauf" class="katbaumbutton" tabindex="0">Alle aufklappen</span>
+		<span id="allezu" class="katbaumbutton" tabindex="0">Alle zuklappen</span>
+		<div id="zugriffsrechte">
+			<f:format.raw>{results}</f:format.raw>
+		</div>
+	</f:section>
+</f:spaceless>
+</html>
+

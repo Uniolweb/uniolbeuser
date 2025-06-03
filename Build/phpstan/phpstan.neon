@@ -1,0 +1,81 @@
+# default phpstan configuration
+#
+# Run phpstan
+# -----------
+#
+# Build/Scripts/runTests.sh -s phpstan
+#
+# Adding a baseline
+# -----------------
+#
+#  1. create baseline file
+#    Build/Scripts/runTests.sh -s phpstanGenerateBaseline -e "-c Build/phpstan/phpstan_v12.neon"
+#    mv Build/phpstan/phpstan-baseline.neon Build/phpstan/phpstan-baseline_v12.neon
+#
+#  2. Include the baseline file in this file (uncomment below)
+#
+# Dealing with mixed arrays
+# -------------------------
+#  Be as specific as possible, e.g. use
+#
+# * `array<string>` etc.
+# * or `array{'foo': int, "bar": string}`
+#
+# If the array is dynamic or cannot be specified, use `mixed[]`
+# see
+#
+# * https://phpstan.org/writing-php-code/phpdoc-types#array-shapes
+# * https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type
+# * https://github.com/phpstan/phpstan/discussions/4375
+
+
+# ----------------------
+
+# basic configuration
+
+includes:
+  #- phpstan-baseline_v12.neon
+  # If phpstan/extension-installer is used, this is not necessary.
+  #- .Build/vendor/jangregor/phpstan-prophecy/extension.neon
+
+parameters:
+  tmpDir: ../../.Build/.cache/phpstan
+  parallel:
+    # Don't be overly greedy on machines with more CPU's to be a good neighbor especially on CI
+    maximumNumberOfProcesses: 10
+  level: 4
+  # check these paths
+  paths:
+    - ../../Classes
+    #- ../../Tests
+  # use these paths (but do not check)
+  scanDirectories:
+    - ../../.Build/vendor
+
+  # do not check if array types specified
+  # deprecated
+  #checkMissingIterableValueType: false
+
+  # phpstan: excludes_analyse is deprecated (2022-09-19)
+  #excludes_analyse:
+  excludePaths:
+    - ../../ext_emconf.php
+
+  editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+
+  # do not report errors which are defined in ignoreErrors, but are not found in code
+  #reportUnmatchedIgnoredErrors: false
+
+  ignoreErrors:
+    # https://phpstan.org/user-guide/ignoring-errors
+
+#services:
+#    -
+#        class: Symplify\PHPStanRules\Rules\ForbiddenNodeRule
+#        tags: [phpstan.rules.rule]
+#        arguments:
+#            forbiddenNodes:
+#                - PhpParser\Node\Expr\ErrorSuppress
+#    -
+#        class: Symplify\PHPStanRules\Rules\SuffixInterfaceRule
+#        tags: [phpstan.rules.rule]

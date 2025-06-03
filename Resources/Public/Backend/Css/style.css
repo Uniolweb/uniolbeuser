@@ -1,0 +1,122 @@
+.current-page {
+    border: black 1px solid;
+    background-color: lightgrey;
+    color: black;
+    padding: 2px;
+}
+
+.uniolbeuser-form fieldset legend {
+    font-size: 1em;
+}
+
+#zugriffsrechte {
+    margin-top: 2em;
+}
+#zugriffsrechte ul:empty {
+    display: none;
+}
+#zugriffsrechte ul {
+    transition: .5s;
+    overflow: hidden;
+    max-height:1000000000px;
+    margin-bottom: 0;
+    padding-left: 21px;
+    /*list-style: none;*/
+}
+#zugriffsrechte ul.zu, #zugriffsrechte li.zu > ul {
+    max-height:0px;
+    transition: .5s;
+    display: none;
+}
+#zugriffsrechte b.hasUl {
+    cursor: pointer;
+    color: var(--uol-text-color);
+}
+
+/**
+ * @todo HTML-Struktur vereinfachen, sollte alles span sein
+ */
+#zugriffsrechte li b.hasUl::before, #zugriffsrechte li span.zwischen.hasUl::before {
+    content: "\f147";
+
+    font-family: FontAwesome;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: .5em;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    top: 1px;
+
+}
+
+/** Eintrag zugeklappt */
+#zugriffsrechte li.zu > b.hasUl::before, #zugriffsrechte li.zu > span.zwischen.hasUl::before  {
+    content: "\f196";
+}
+
+#zugriffsrechte b.hasUl:hover, #zugriffsrechte span.zwischen.hasUl:hover {
+    cursor: pointer;
+}
+.katbaumbutton {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-color: #ccc;
+    padding: 5px 20px;
+    transition: .5s;
+}
+.katbaumbutton:hover {
+    border-color: var(--uol-text-color);
+}
+#zugriffsrechte .hinweis {
+    text-transform: uppercase;
+    font-size: .75em;
+}
+#zugriffsrechte .inactive {
+    /*
+    color: #bbb;
+    color: var(--uol-bg-stufe2-trans);
+    color: var(--uol-grau5);
+
+     */
+    color: lightgrey;
+}
+#zugriffsrechte .fa {
+    color: #aaa;
+}
+.beuser, .begroup {
+    display: inline-block;
+}
+.beuser, .begroup, .beusers {
+    font-size: .9em;
+}
+.begroup {
+    cursor: pointer;
+}
+.begroup_container .beusers {
+    display: none;
+}
+.begroup_container.zeige .beusers {
+    display: inline;
+}
+.fa-external-link:before {
+    vertical-align: middle;
+}
+#suche {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 4px 20px;
+}
+#seite {
+    width: 4em;
+    border-width: 0;
+    background: #ddd;
+}
+#seite:focus {
+    background: #fff;
+}
+a:focus > i.fa-external-link:before {
+    color: #fff;
+}
+

@@ -1,0 +1,106 @@
+{
+	"name": "uniolweb/uniolbeuser",
+	"description": "TYPO3 Backend module showing be_user and be_groups for pages",
+	"license": "GPL-2.0-or-later",
+	"type": "typo3-cms-extension",
+	"authors": [
+		{
+			"name": "Sybille Peters",
+			"role": "Developer"
+		},
+		{
+			"name": "Volker Burggräf",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/sypets/brofix/issues",
+		"source": "https://github.com/sypets/brofix",
+		"docs": "https://docs.typo3.org/p/sypets/brofix/main/en-us/Index.html"
+	},
+	"require": {
+		"php": "^8.1",
+		"typo3/cms-backend": "^12.4.32",
+		"typo3/cms-core": "^12.4.32",
+		"typo3/cms-extbase": "^12.4.32",
+		"typo3/cms-fluid": "^12.4.32"
+	},
+	"require-dev": {
+		"ergebnis/composer-normalize": "^2.47",
+		"friendsofphp/php-cs-fixer": "^3.75",
+		"phpstan/phpstan": "^1.12",
+		"saschaegerer/phpstan-typo3": "^1.10",
+		"ssch/typo3-rector": "^2.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Uniolweb\\Uniolbeuser\\": "Classes/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"ergebnis/composer-normalize": true,
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		},
+		"bin-dir": ".Build/bin",
+		"sort-packages": true,
+		"vendor-dir": ".Build/vendor"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "uniolbeuser",
+			"web-dir": ".Build/Web"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+		],
+		"ci:cgl:check": [
+			"@ci:phpcgl:check"
+		],
+		"ci:check": [
+			"@ci:composerinstall",
+			"@ci:composervalidate",
+			"@ci:cgl:check",
+			"@ci:phplint",
+			"@ci:phpstan",
+			"@ci:phpunit",
+			"@ci:phpfunctional"
+		],
+		"ci:cleanup": [
+			"rm -rf .Build;rm composer.lock;composer config --unset platform.php;composer config --unset platform"
+		],
+		"ci:composerinstall": [
+			"Build/Scripts/runTests.sh -s composerInstallMax"
+		],
+		"ci:composervalidate": [
+			"Build/Scripts/runTests.sh -s composerValidate"
+		],
+		"ci:phpcgl:check": [
+			"Build/Scripts/runTests.sh -s cgl -n"
+		],
+		"ci:phpcgl:fix": [
+			"Build/Scripts/runTests.sh -s cgl"
+		],
+		"ci:phpfunctional": [
+			"Build/Scripts/runTests.sh -s functional"
+		],
+		"ci:phplint": [
+			"Build/Scripts/runTests.sh -s lint"
+		],
+		"ci:phpstan": [
+			"Build/Scripts/runTests.sh -s phpstan -e \"-c Build/phpstan/phpstan.neon\""
+		],
+		"ci:phpunit": [
+			"Build/Scripts/runTests.sh -s unit"
+		],
+		"rector:check": [
+			"@php .Build/bin/rector --dry-run"
+		],
+		"rector:fix": [
+			"@php .Build/bin/rector"
+		]
+	}
+}
