@@ -23,7 +23,7 @@ class BackendUserService
         $ignorePageDbMounts = explode(',', $extensionConfiguration->get('uniolbeuser', 'ignorePageDbMounts'));
         $this->ignorePageDbMounts = [];
         foreach ($ignorePageDbMounts as $ignorePageDbMount) {
-            $this->ignorePageDbMounts[] = (int) $ignorePageDbMount;
+            $this->ignorePageDbMounts[] = (int)$ignorePageDbMount;
         }
     }
 
@@ -90,7 +90,7 @@ class BackendUserService
             $dbMounts = [$dbMounts];
         }
 
-        foreach($dbMounts as $key => $dbMount) {
+        foreach ($dbMounts as $key => $dbMount) {
             if (in_array((int)$dbMount, $this->ignorePageDbMounts)) {
                 unset($dbMounts[$key]);
             }
