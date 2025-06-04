@@ -20,7 +20,7 @@
  *
  * And then simply run
  *
- *  $ .Build/bin/php-cs-fixer fix -v --config ./Build/php-cs-fixer.php Classes Tests
+ *  $ .Build/bin/php-cs-fixer fix -v --config ./Build/.php-cs-fixer.php Classes Tests
  *
  * For more information read:
  * 	 https://www.php-fig.org/psr/psr-2/
@@ -32,15 +32,13 @@ if (PHP_SAPI !== 'cli') {
 // Define in which folders to search and which folders to exclude
 // Exclude some directories that are excluded by Git anyways to speed up the sniffing
 $finder = PhpCsFixer\Finder::create()
-    ->exclude('bin')
     ->exclude('vendor')
     ->exclude('typo3conf')
     ->exclude('typo3temp')
     ->exclude('typo3/sysext/core/Tests/Acceptance/Support/_generated')
     ->notName('install.php')
     ->notName('index.php')
-    //->in(__DIR__ . '/../Tests')
-    ->in(__DIR__ . '/../Classes');;
+    ->in(__DIR__ . '/../');
 // Return a Code Sniffing configuration using
 // all sniffers needed for PSR-2
 // and additionally:
@@ -64,7 +62,7 @@ $config
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
         'dir_constant' => true,
-        'function_typehint_space' => true,
+        'type_declaration_spaces' => true,
         'single_line_comment_style' => true,
         'lowercase_cast' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],

@@ -11,9 +11,6 @@ use Ssch\TYPO3Rector\CodeQuality\General\ConvertImplicitVariablesToExplicitGloba
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 use Ssch\TYPO3Rector\TYPO311\v5\FlexFormToolsArrayValueByPathRector;
-use Ssch\TYPO3Rector\TYPO312\v0\MigrateFetchAllToFetchAllAssociativeRector;
-use Ssch\TYPO3Rector\TYPO312\v0\MigrateFetchColumnToFetchOneRector;
-use Ssch\TYPO3Rector\TYPO312\v0\MigrateFetchToFetchAssociativeRector;
 
 /**
  * composer require --dev ssch/typo3-rector
@@ -22,7 +19,6 @@ use Ssch\TYPO3Rector\TYPO312\v0\MigrateFetchToFetchAssociativeRector;
  * - TYPO3 v12
  * - latest ssch/typo3-rector (2.6.0)
  * - PHP >=8.1
- *
  */
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
