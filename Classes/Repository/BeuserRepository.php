@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Uniolweb\Uniolbeuser\Repository;
 
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Uniolweb\Uniolbeuser\Configuration\UniolbeuserConfiguration;
 
 /**
  * @todo Add localization
@@ -33,24 +33,12 @@ class BeuserRepository
     protected ?array $groups = null;
     protected ?array $users = null;
 
-    /**
-     * @var array<int,int>
-     */
     protected array $visiblePageTypes = [];
 
-    public function __construct(protected ConnectionPool $connectionPool, ExtensionConfiguration $extensionConfiguration)
-    {
-        $visiblePageTypes = explode(',', $extensionConfiguration->get('uniolbeuser', 'visiblePageTypes'));
-
-        foreach ($visiblePageTypes as $visiblePageType) {
-            $visiblePageType = (int)$visiblePageType;
-            if ($visiblePageType > 0) {
-                $this->visiblePageTypes[] = (int)$visiblePageType;
-            }
-        }
-        if (!$this->visiblePageTypes) {
-            $this->visiblePageTypes = [1];
-        }
+    public function __construct(
+        protected ConnectionPool $connectionPool,
+        protected UniolbeuserConfiguration $uniolbeuserConfiguration
+    ) {
     }
 
     public function clearData(): void
@@ -294,13 +282,13 @@ class BeuserRepository
 
             // Link to page
             $pageUrl = $this->generatePageUrl((int)$pageInfo['uid']);
-            if (!$pageInfo['hidden'] && in_array($doktype, $this->visiblePageTypes)) {
+            if (!$pageInfo['hidden'] && in_array($doktype, $this->uniolbeuserConfiguration->getVisiblePageTypes())) {
                 $html .= ' <a href="' . $pageUrl . '" tabindex="0" title="Seite aufrufen" target="_blank">'
                     . '<i class="fa fa-external-link" aria-hidden="true"></i></a>';
             }
 
             // Other doktype
-            if (!in_array($doktype, $this->visiblePageTypes)) {
+            if (!in_array($doktype, $this->uniolbeuserConfiguration->getVisiblePageTypes())) {
                 $html .= '&nbsp; <span class="hinweis doktype"><i class="fa fa-file-o" aria-hidden="true"></i> '
                     . '</span>';
             }

@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Uniolweb\Uniolbeuser\Configuration\UniolbeuserConfiguration;
 use Uniolweb\Uniolbeuser\Controller\UserData\FormData;
 use Uniolweb\Uniolbeuser\Repository\BeuserRepository;
 use Uniolweb\Uniolbeuser\Service\BackendUserService;
@@ -30,7 +31,8 @@ class BackendModuleController extends ActionController
         protected BackendUriBuilder $backendUriBuilder,
         protected PageRenderer $pageRenderer,
         protected BackendUserService $backendUserService,
-        protected BeuserRepository $beuserRepository
+        protected BeuserRepository $beuserRepository,
+        protected UniolbeuserConfiguration $configuration
     ) {
         $this->backendModuleUserDataIdentifier = 'web_beuser';
     }
@@ -49,6 +51,7 @@ class BackendModuleController extends ActionController
         }
         $pageId = (int)($this->request->getQueryParams()['id'] ?? 0);
         $this->view->assign('pageId', $pageId);
+        $this->view->assign('blurBeUsernames', $this->configuration->isBlurBeUsernames());
         $this->finalizeAction($action, $formdata);
 
         if ($pageId) {
