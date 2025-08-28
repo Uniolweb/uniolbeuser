@@ -1,0 +1,3 @@
+span.beuser, .beusers span {
+    filter: blur(2px);
+}

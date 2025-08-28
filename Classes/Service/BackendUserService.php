@@ -4,27 +4,17 @@ declare(strict_types=1);
 namespace Uniolweb\Uniolbeuser\Service;
 
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Uniolweb\Uniolbeuser\Configuration\UniolbeuserConfiguration;
 
 /**
  * Fetch information about BE users.
  */
 class BackendUserService
 {
-    /**
-     * @var array<int,int>
-     */
-    protected $ignorePageDbMounts = [];
-
-    public function __construct(ExtensionConfiguration $extensionConfiguration)
+    public function __construct(protected UniolbeuserConfiguration $configuration)
     {
-        $ignorePageDbMounts = explode(',', $extensionConfiguration->get('uniolbeuser', 'ignorePageDbMounts'));
-        $this->ignorePageDbMounts = [];
-        foreach ($ignorePageDbMounts as $ignorePageDbMount) {
-            $this->ignorePageDbMounts[] = (int)$ignorePageDbMount;
-        }
     }
 
     /**
@@ -91,7 +81,7 @@ class BackendUserService
         }
 
         foreach ($dbMounts as $key => $dbMount) {
-            if (in_array((int)$dbMount, $this->ignorePageDbMounts)) {
+            if (in_array((int)$dbMount, $this->configuration->getIgnorePageDbMounts())) {
                 unset($dbMounts[$key]);
             }
         }

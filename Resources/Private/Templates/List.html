@@ -14,6 +14,10 @@
 	<f:section name="Content">
 		<f:flashMessages/>
 
+		<f:if condition="{blurBeUsernames}">
+			<f:asset.css identifier="uniolbeuser_blurUsernames" href="EXT:uniolbeuser/Resources/Public/Backend/Css/blur.css"/>
+		</f:if>
+
 		<span id="alleauf" class="katbaumbutton" tabindex="0">Alle aufklappen</span>
 		<span id="allezu" class="katbaumbutton" tabindex="0">Alle zuklappen</span>
 		<div id="zugriffsrechte">
