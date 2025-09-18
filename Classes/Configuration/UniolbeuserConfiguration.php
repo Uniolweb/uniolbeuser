@@ -19,6 +19,8 @@ class UniolbeuserConfiguration
 
     protected bool $blurBeUsernames = false;
 
+    protected string $beGroupsTitleLike = '';
+
     public function __construct(ExtensionConfiguration $extensionConfiguration)
     {
         $this->inializeValues($extensionConfiguration);
@@ -39,6 +41,9 @@ class UniolbeuserConfiguration
 
         // extconf: 'blurBeUsernames'
         $this->blurBeUsernames = (bool)$extensionConfiguration->get('uniolbeuser', 'blurBeUsernames');
+
+        // extconf: 'beGroupsTitleLike'
+        $this->beGroupsTitleLike = $extensionConfiguration->get('uniolbeuser', 'beGroupsTitleLike');
     }
 
     /**
@@ -78,5 +83,10 @@ class UniolbeuserConfiguration
     public function isBlurBeUsernames(): bool
     {
         return $this->blurBeUsernames;
+    }
+
+    public function getBeGroupsTitleLike(): string
+    {
+        return $this->beGroupsTitleLike;
     }
 }

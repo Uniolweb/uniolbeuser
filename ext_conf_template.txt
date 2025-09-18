@@ -8,5 +8,8 @@ visiblePageTypes = 1
 # cat=pages; type=string; label=Do not show these pages (csv string)
 ignorePageDbMounts =
 
+# cat=BE Groups; type=string; label=Use only BE groups which match this title (use % for wildcards as in LIKE)
+beGroupsTitleLike =
+
 # cat=data protection; type=boolean; label=Always blur names of editors: They will only be visibly blurred, name is still in HTML-code!
 blurBeUsernames = 0
