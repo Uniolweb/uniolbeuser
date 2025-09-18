@@ -114,12 +114,18 @@ class BeuserRepository
         $queryBuidler->getRestrictions()
             ->removeAll()
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $result = $queryBuidler->select('uid', 'title', 'db_mountpoints')
+        $queryBuidler->select('uid', 'title', 'db_mountpoints')
             ->from('be_groups')
-            ->where(
-                $queryBuidler->expr()->like('title', $queryBuidler->createNamedParameter('D :: %'))
-            )
-            ->addOrderBy('title')
+            ->addOrderBy('title');
+        if ($this->uniolbeuserConfiguration->getBeGroupsTitleLike()) {
+            $queryBuidler->where(
+                $queryBuidler->expr()->like(
+                    'title',
+                    $queryBuidler->createNamedParameter($this->uniolbeuserConfiguration->getBeGroupsTitleLike())
+                )
+            );
+        }
+        $result = $queryBuidler
             ->executeQuery();
 
         while ($group = $result->fetchAssociative()) {
