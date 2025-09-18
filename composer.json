@@ -14,9 +14,9 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/sypets/brofix/issues",
-		"source": "https://github.com/sypets/brofix",
-		"docs": "https://docs.typo3.org/p/sypets/brofix/main/en-us/Index.html"
+		"issues": "https://github.com/Uniolweb/uniolbeuser/issues",
+		"source": "https://github.com/Uniolweb/uniolbeuser",
+		"docs": "https://github.com/Uniolweb/uniolbeuser/blob/main/README.md"
 	},
 	"require": {
 		"php": "^8.1",

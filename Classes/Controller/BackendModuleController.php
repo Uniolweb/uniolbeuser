@@ -37,7 +37,7 @@ class BackendModuleController extends ActionController
         $this->backendModuleUserDataIdentifier = 'web_beuser';
     }
 
-    public function listAction(FormData $formdata = null): ResponseInterface
+    public function listAction(?FormData $formdata = null): ResponseInterface
     {
         $action = '';
         if ($formdata === null) {
