@@ -40,6 +40,7 @@ class BackendModuleController extends ActionController
     public function listAction(?FormData $formdata = null): ResponseInterface
     {
         $action = '';
+        $results = [];
         if ($formdata === null) {
             $formdata = $this->getModuleDataForm();
         } else {
@@ -50,19 +51,18 @@ class BackendModuleController extends ActionController
             $formdata->setCurrentAction($action);
         }
         $pageId = (int)($this->request->getQueryParams()['id'] ?? 0);
-        $this->view->assign('pageId', $pageId);
-        $this->view->assign('blurBeUsernames', $this->configuration->isBlurBeUsernames());
-        $this->finalizeAction($action, $formdata);
+
+        $this->saveModuleDataForm($formdata);
 
         if ($pageId) {
             // Show only subpages, no rootline
             $childrenAsHtml = $this->beuserRepository->generateListAsHtml([$pageId], $pageId);
             $this->beuserRepository->clearData();
-            $this->view->assign('results', $this->beuserRepository->addRootlineAsHtmlForPageId($pageId, $childrenAsHtml));
+            $results = $this->beuserRepository->addRootlineAsHtmlForPageId($pageId, $childrenAsHtml);
         } else {
             if ($this->isAdmin()) {
                 // Show entire list for admin
-                $this->view->assign('results', $this->beuserRepository->generateListAsHtml());
+                $results = $this->beuserRepository->generateListAsHtml();
                 $this->addFlashMessage('Es ist aktuell keine Seite im Seitenbaum ausgewählt: alle anzeigen', '', ContextualFeedbackSeverity::INFO);
             } else {
                 // show notice
@@ -71,19 +71,16 @@ class BackendModuleController extends ActionController
         }
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
-    }
+        $moduleTemplate->assign('pageId', $pageId);
+        $moduleTemplate->assign('blurBeUsernames', $this->configuration->isBlurBeUsernames());
+        $moduleTemplate->assign('isAdmin', $this->backendUserService->isAdmin());
+        $moduleTemplate->assign('action', $action);
+        $moduleTemplate->assign('formdata', $formdata);
+        $moduleTemplate->assign('results', $results);
+        return $moduleTemplate->renderResponse('List');
 
-    /**
-     * Call for all actions
-     */
-    protected function finalizeAction(string $action, FormData $formdata): void
-    {
-        $this->saveModuleDataForm($formdata);
-        $this->view->assign('isAdmin', $this->backendUserService->isAdmin());
-        $this->view->assign('action', $action);
-        $this->view->assign('formdata', $formdata);
+        //$moduleTemplate->setContent($this->view->render());
+        //return $this->htmlResponse($moduleTemplate->renderContent());
     }
 
     protected function saveModuleDataForm(FormData $formdata): void

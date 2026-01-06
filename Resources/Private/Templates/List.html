@@ -5,13 +5,16 @@
 	data-namespace-typo3-fluid="true">
 
 <f:spaceless>
-	<f:layout name="BackendModuleLayout"/>
+	<f:comment><f:layout name="BackendModuleLayout"/></f:comment>
+	<f:layout name="Module" />
 
-	<f:section name="Header">
-		<h2>Übersicht über Redakteure</h2>
-	</f:section>
 
 	<f:section name="Content">
+		<f:asset.css href="EXT:uniolbeuser/Resources/Public/Backend/Css/style.css" identifier="uniolbeuser_style.css"/>
+		<f:comment>todo: use f:asset.module</f:comment>
+		<f:asset.script identifier="@uniolweb/uniolbeuser/Uniolbeuser.js" src="EXT:uniolbeuser/Resources/Public/Backend/JavaScript/Modules/Uniolbeuser.js"/>
+
+		<h2>Übersicht über Redakteure</h2>
 		<f:flashMessages/>
 
 		<f:if condition="{blurBeUsernames}">
