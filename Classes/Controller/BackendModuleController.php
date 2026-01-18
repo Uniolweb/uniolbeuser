@@ -78,9 +78,6 @@ class BackendModuleController extends ActionController
         $moduleTemplate->assign('formdata', $formdata);
         $moduleTemplate->assign('results', $results);
         return $moduleTemplate->renderResponse('List');
-
-        //$moduleTemplate->setContent($this->view->render());
-        //return $this->htmlResponse($moduleTemplate->renderContent());
     }
 
     protected function saveModuleDataForm(FormData $formdata): void
