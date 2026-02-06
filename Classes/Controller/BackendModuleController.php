@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -33,8 +32,7 @@ class BackendModuleController extends ActionController
         protected PageRenderer $pageRenderer,
         protected BackendUserService $backendUserService,
         protected BeuserRepository $beuserRepository,
-        protected UniolbeuserConfiguration $configuration,
-        protected Typo3Version $typo3Version
+        protected UniolbeuserConfiguration $configuration
     ) {
         $this->backendModuleUserDataIdentifier = 'web_beuser';
     }
@@ -79,7 +77,6 @@ class BackendModuleController extends ActionController
         $moduleTemplate->assign('action', $action);
         $moduleTemplate->assign('formdata', $formdata);
         $moduleTemplate->assign('results', $results);
-        $moduleTemplate->assign('typo3MajorVersion', $this->typo3Version->getMajorVersion());
         return $moduleTemplate->renderResponse('List');
     }
 
