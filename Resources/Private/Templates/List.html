@@ -11,8 +11,13 @@
 
 	<f:section name="Content">
 		<f:asset.css href="EXT:uniolbeuser/Resources/Public/Backend/Css/style.css" identifier="uniolbeuser_style.css"/>
-		<f:comment>todo: use f:asset.module</f:comment>
-		<f:asset.script identifier="@uniolweb/uniolbeuser/Uniolbeuser.js" src="EXT:uniolbeuser/Resources/Public/Backend/JavaScript/Modules/Uniolbeuser.js"/>
+		<f:comment>todo use  f:asset.module identifier="@uniolweb/uniolbeuser/Uniolbeuser.js", when support for v12 is dropped</f:comment>
+
+		<f:be.pageRenderer
+			includeJavaScriptModules="{
+      			0: '@uniolweb/uniolbeuser/Uniolbeuser.js'
+   			}"
+		/>
 
 		<h2>Übersicht über Redakteure</h2>
 		<f:flashMessages/>
