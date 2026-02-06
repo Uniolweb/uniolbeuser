@@ -11,8 +11,15 @@
 
 	<f:section name="Content">
 		<f:asset.css href="EXT:uniolbeuser/Resources/Public/Backend/Css/style.css" identifier="uniolbeuser_style.css"/>
-		<f:comment>todo: use f:asset.module</f:comment>
-		<f:asset.script identifier="@uniolweb/uniolbeuser/Uniolbeuser.js" src="EXT:uniolbeuser/Resources/Public/Backend/JavaScript/Modules/Uniolbeuser.js"/>
+		<f:comment>todo remove version switch, when support for v12 is dropped</f:comment>
+		<f:if condition="{typo3MajorVersion} == 12">
+			<f:then>
+				<f:asset.script identifier="@uniolweb/uniolbeuser/Uniolbeuser.js" src="EXT:uniolbeuser/Resources/Public/Backend/JavaScript/Modules/Uniolbeuser.js"/>
+			</f:then>
+			<f:else>
+				<f:asset.module identifier="@uniolweb/uniolbeuser/Uniolbeuser.js"/>
+			</f:else>
+		</f:if>
 
 		<h2>Übersicht über Redakteure</h2>
 		<f:flashMessages/>
