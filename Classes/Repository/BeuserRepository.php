@@ -7,6 +7,7 @@ namespace Uniolweb\Uniolbeuser\Repository;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Uniolweb\Uniolbeuser\Configuration\UniolbeuserConfiguration;
@@ -243,9 +244,14 @@ class BeuserRepository
      */
     protected function generatePageUrl(int $pageId): string
     {
-        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId(
-            $pageId
-        );
+        try {
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId(
+                $pageId
+            );
+        } catch (SiteNotFoundException $e) {
+            // this is not an error, a site might not be assigned for a page or a page may be outside of the sites
+            return '';
+        }
         return (string)$site->getRouter()->generateUri($pageId);
     }
 
@@ -289,8 +295,13 @@ class BeuserRepository
             // Link to page
             $pageUrl = $this->generatePageUrl((int)$pageInfo['uid']);
             if (!$pageInfo['hidden'] && in_array($doktype, $this->uniolbeuserConfiguration->getVisiblePageTypes())) {
-                $html .= ' <a href="' . $pageUrl . '" tabindex="0" title="Seite aufrufen" target="_blank">'
-                    . '<i class="fa fa-external-link" aria-hidden="true"></i></a>';
+                if ($pageUrl) {
+                    $html .= ' <a href="' . $pageUrl . '" tabindex="0" title="Seite aufrufen" target="_blank">'
+                        . '<i class="fa fa-external-link" aria-hidden="true"></i></a>';
+                } else {
+                    $html .= ' '
+                        . '<i class="fa fa-external-link" aria-hidden="true"></i>';
+                }
             }
 
             // Other doktype
