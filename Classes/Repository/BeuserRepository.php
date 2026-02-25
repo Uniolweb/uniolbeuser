@@ -38,7 +38,8 @@ class BeuserRepository
 
     public function __construct(
         protected ConnectionPool $connectionPool,
-        protected UniolbeuserConfiguration $uniolbeuserConfiguration
+        protected UniolbeuserConfiguration $uniolbeuserConfiguration,
+        protected SiteFinder $siteFinder,
     ) {
     }
 
@@ -245,7 +246,7 @@ class BeuserRepository
     protected function generatePageUrl(int $pageId): string
     {
         try {
-            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId(
+            $site = $this->siteFinder->getSiteByPageId(
                 $pageId
             );
         } catch (SiteNotFoundException $e) {
